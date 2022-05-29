@@ -79,8 +79,8 @@ body {
     font: inherit;
 }
 
-
-.todo__item > input[type='checkbox']:checked  + div {
+ 
+.todo__item > input[type='checkbox']:checked  + div{
     text-decoration:line-through;
 }
 
