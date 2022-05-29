@@ -7,30 +7,50 @@
 // </label> 
 
 let banco = [
-    {'tarefa':'Estudar JS', 'status': ''},
-    {'tarefa':'Netflix', 'status': 'checked'}
+    {'task':'Estudar JS', 'status': ''},
+    {'task':'Netflix', 'status': 'checked'},
+    {'task':'Teste', 'status': ''}
 
 
 ];
 
-const criarItem = (tarefa, status='') => { // Se alguém não passa informação nenhuma, é pq tá vazio
-    const item = document.createElement('label');
-    item.classList.add('todo__item');
-    item.innerHTML = `
+const criarTarefa = (tarefa, status) => { // Status='' Se alguém não passa informação nenhuma, é pq tá vazio
+    const area = document.createElement('label');
+    area.classList.add('todo__item');
+    area.innerHTML = `
         <input type="checkbox" ${status}=''>
         <div>${tarefa}</div>
         <input type="button" value="X">
 
     `
     
-    document.getElementById('todoList').appendChild(item);
+    document.getElementById('todoList').appendChild(area);
 
  
 }
 
-const atualizarTela = () => {//Normalmente se coloca 'render', pois rendeiza na tela
-    banco.forEach(item => criarItem(item.tarefa)); 
+const limparTarefas = () => {
+    const todoList = document.getElementById('todoList')    
+    while (todoList.firstChild) {
+        todoList.removeChild(todoList.lastChild)
 
+        //Enquanto existir a primeira div, remove a última. 
+        //Até que o último será o primeiro, então não existira mais primeiro
+
+        if (todoList.firstChild === todoList.lastChild) {
+            console.log('Última')
+
+        }
+    }
+
+}
+
+const atualizarTela = (teste) => {//Normalmente se coloca 'render', pois rendeiza na tela
+    let i = 0
+    limparTarefas() //Aqui tem que ficar antes, pois se mover para depois do 'foreach' ele apaga a que foi criada
+    banco.forEach(item => criarTarefa(item.task, item.status));
+    console.log(teste)
+    
 } 
 
-atualizarTela();
+atualizarTela('1');
