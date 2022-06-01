@@ -13,6 +13,21 @@
 
 // ];
 
+//Função para celular
+const botao = document.getElementById('botaoadd');
+const inpuTexto = document.getElementById('newItem');
+
+botao.addEventListener("click", function (e) { 
+    const banco = getBanco();
+        banco.push ({'task': inpuTexto.value, 'status': ''})
+       //Pode ser também: banco.push ({'task': evento.target.value, 'status': ''}) //O valor do alvo do evento, no caso, o texto
+       setBanco(banco)
+       atualizarTela();
+       inpuTexto.value = ''; //Limpar a tarefa
+})
+
+//Função terminada
+
 const getBanco = () => JSON.parse(localStorage.getItem('todoListItem')) ?? [];
 //Nome dado para o item do localSotage 
 //?? = Se isso não existir
@@ -63,7 +78,7 @@ const inserirItem = (evento) => { //O addEventListener manda para o callback'ins
        atualizarTela();
         evento.target.value = ''; //Limpar a tarefa
     }
-    console.log(tecla)
+    // console.log(tecla)
 }
 
 const removerItem = (indice) => {
@@ -96,6 +111,7 @@ const clickItem = (evento) => { //O addEventListener manda para o callback'click
     }
     console.log(elementoClicado)
 }
+
 
 document.getElementById('newItem').addEventListener('keypress', inserirItem);
 document.getElementById('todoList').addEventListener('click', clickItem);
