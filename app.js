@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 // <label class="todo__item">
 // <input type="checkbox">
@@ -6,12 +6,20 @@
 // <input type="button" value="X">
 // </label> 
 
-let banco = [
-    {'task':'Estudar JS', 'status': ''},
-    {'task':'Netflix', 'status': 'checked'},
-    {'task':'Teste', 'status': ''}
+// let banco = [
+//     {'task':'Estudar JS', 'status': ''},
+//     {'task':'Netflix', 'status': 'checked'},
+//     {'task':'Teste', 'status': ''}
 
-];
+// ];
+
+const getBanco = () => JSON.parse(localStorage.getItem('todoListItem')) ?? [];
+//Nome dado para o item do localSotage 
+//?? = Se isso não existir
+//Se houve algo no localStorage chamado 'todoListItem', pegar isso. Se não, passar uma array vazia
+    //Array vazia é necessária para não dar erro. Um valor vazio é melhor do que um valor inexistente
+const setBanco = (banco) => localStorage.setItem('todoListItem', JSON.stringify(banco))
+
 
 const criarTarefa = (tarefa, status, indice) => { // Status='' Se alguém não passa informação nenhuma, é pq tá vazio
     const area = document.createElement('label');
@@ -20,56 +28,57 @@ const criarTarefa = (tarefa, status, indice) => { // Status='' Se alguém não p
         <input type="checkbox" ${status}='' data-indice=${indice}>
         <div>${tarefa}</div>
         <input type="button" value="X" data-indice=${indice}>
-
-    `
+    ` 
     document.getElementById('todoList').appendChild(area);
-
 }
 
 const limparTarefas = () => {
     const todoList = document.getElementById('todoList')    
     while (todoList.firstChild) {
         todoList.removeChild(todoList.lastChild)
-
         //Enquanto existir a primeira div, remove a última. 
         //Até que o último será o primeiro, então não existira mais primeiro
-
         if (todoList.firstChild === todoList.lastChild) {
             console.log('Última')
-
+            //Anotação de estudo
         }
     }
 }
 
 const atualizarTela = (teste) => {//Normalmente se coloca 'render', pois rendeiza na tela
     limparTarefas() //Aqui tem que ficar antes, pois se mover para depois do 'foreach' ele apaga a que foi criada
+    const banco = getBanco() // Depois que comentei o 'Banco' la em cima, tenho que redefinir pelo padrão do localStorage
     banco.forEach( (item, indice) => criarTarefa(item.task, item.status, indice));
-    console.log(teste)
-    
+    console.log(teste)    
 } 
 
 const inserirItem = (evento) => { //O addEventListener manda para o callback'inserirItem' o evento que aconteceu
     const tecla = evento.key;
-    const texto = evento.target.value;
+   // const texto = evento.target.value;
     if (tecla === 'Enter') {
+        const banco = getBanco();
         banco.push ({'task': evento.target.value, 'status': ''})
        //Pode ser também: banco.push ({'task': evento.target.value, 'status': ''}) //O valor do alvo do evento, no caso, o texto
-        atualizarTela('1');
+       setBanco(banco)
+       atualizarTela();
         evento.target.value = ''; //Limpar a tarefa
     }
     console.log(tecla)
 }
 
 const removerItem = (indice) => {
-    banco.splice(indice, 1); 
+    const banco = getBanco()
+    banco.splice(indice, 1); //A partir do 'indice' que recebe, na posiação '1' = Ele próprio
+    setBanco(banco)
     atualizarTela();//Splice é pra recortar/modificar um array
     //Splice começa com 1 e não com 0
-
 }
 
 //Modificar o banco - part 2
 const atualizarItem = (indice) => {
+    const banco = getBanco();
     banco[indice].status = banco[indice].status === '' ? 'checked' :''// ? Então : Se não
+    setBanco(banco);
     atualizarTela();
 }
 
