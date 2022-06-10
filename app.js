@@ -28,14 +28,17 @@ botao.addEventListener("click", function (e) {
 
 //Função terminada
 
+//4
 const getBanco = () => JSON.parse(localStorage.getItem('todoListItem')) ?? [];
 //Nome dado para o item do localSotage 
 //?? = Se isso não existir
 //Se houve algo no localStorage chamado 'todoListItem', pegar isso. Se não, passar uma array vazia
     //Array vazia é necessária para não dar erro. Um valor vazio é melhor do que um valor inexistente
+
+//2
 const setBanco = (banco) => localStorage.setItem('todoListItem', JSON.stringify(banco))
 
-
+//5
 const criarTarefa = (tarefa, status, indice) => { // Status='' Se alguém não passa informação nenhuma, é pq tá vazio
     const area = document.createElement('label');
     area.classList.add('todo__item');
@@ -47,6 +50,7 @@ const criarTarefa = (tarefa, status, indice) => { // Status='' Se alguém não p
     document.getElementById('todoList').appendChild(area);
 }
 
+//4
 const limparTarefas = () => {
     const todoList = document.getElementById('todoList')    
     while (todoList.firstChild) {
@@ -60,6 +64,7 @@ const limparTarefas = () => {
     }
 }
 
+//3
 const atualizarTela = (teste) => {//Normalmente se coloca 'render', pois rendeiza na tela
     limparTarefas() //Aqui tem que ficar antes, pois se mover para depois do 'foreach' ele apaga a que foi criada
     const banco = getBanco() // Depois que comentei o 'Banco' la em cima, tenho que redefinir pelo padrão do localStorage
@@ -67,6 +72,7 @@ const atualizarTela = (teste) => {//Normalmente se coloca 'render', pois rendeiz
     console.log(teste)    
 } 
 
+// 1
 const inserirItem = (evento) => { //O addEventListener manda para o callback'inserirItem' o evento que aconteceu
     const tecla = evento.key;
    // const texto = evento.target.value;
